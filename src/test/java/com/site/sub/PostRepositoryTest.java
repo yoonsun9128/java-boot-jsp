@@ -7,12 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class SubApplicationTests {
+class PostRepositoryTest {
 	@Autowired
 	private QuestionRepository questionRepository;
 
@@ -25,6 +26,17 @@ class SubApplicationTests {
 
 		Question q = questions.get(0);
 		assertEquals("sbb가 무엇인가요?", q.getSubject());
+	}
+
+	@Test
+	@DisplayName("findById")
+	void t2() {
+		Optional<Question> question = questionRepository.findById(1);
+
+		if (question.isPresent()) {
+			Question q = question.get();
+			assertEquals("sbb가 무엇인가요?", q.getSubject());
+		}
 	}
 
 }
