@@ -3,6 +3,9 @@ spring:
     name: sub
   profiles:
     active: dev
+  output:
+    ansi:
+      enabled: always #출력문 컬러변경
   jpa:
     show-sql: true
     hibernate:
@@ -12,8 +15,8 @@ spring:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
-  logging:
-    level:
-      org.hibernate.orm.jdbc.bind: TRACE
-      org.hibernate.orm.jdbc.extract: TRACE
-      org.springframework.transaction.interceptor: TRACE
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.orm.jdbc.extract: TRACE
+    org.springframework.transaction.interceptor: TRACE
