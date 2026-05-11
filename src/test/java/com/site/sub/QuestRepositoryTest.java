@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class QuestRepositoryTest {
 	@Autowired
 	private QuestionRepository questionRepository;
+	@Autowired
+	private AnswerRepository answerRepository;
 
 	@Test
 	@DisplayName("findall")
@@ -91,5 +94,42 @@ public class QuestRepositoryTest {
 		questionRepository.delete(question);
 
 		assertThat(questionRepository.count()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("답변 생성")
+	@Transactional
+	void v8() {
+		Question question = questionRepository.findById(2).get();
+
+		Answer answer = new Answer();
+		answer.setContent("네 자동으로 생성됩니다.");
+		answer.setQuestion(question);
+		answer.setCreateDate(LocalDateTime.now());
+		answerRepository.save(answer);
+	}
+
+	@Test
+	@DisplayName("onetomany 답변생성")
+	@Transactional
+	void v9() {
+		Question question = questionRepository.findById(2).get();
+
+		int beforeCount = question.getAnswers().size();
+
+		// 아래 코드로 객체는 생성되어서 answers에 추가되지만 실제 INSERT는 트랜잭션이 끝나면 수행됩니다.
+		// 만약에 롤백이 된다면 INSERT 되지 않습니다.
+		// 그런데 이 메서드(t9) 특성상 롤백이 됩니다.
+		// 그래서 밑에 `questionRepository.flush();` 추가 했습니다.
+		Answer newAnswer = question.addAnswer("네 자동으로 생성됩니다.");
+
+		// 트랜잭션이 종료된 이후에 DB에 반영되기 때문에 현재는 일단 0으로 설정된다.
+		assertThat(newAnswer.getId()).isEqualTo(0);
+
+		int afterCount = question.getAnswers().size();
+
+		assertThat(afterCount).isEqualTo(beforeCount + 1);
+
+		questionRepository.flush(); // 추가된 코드
 	}
 }

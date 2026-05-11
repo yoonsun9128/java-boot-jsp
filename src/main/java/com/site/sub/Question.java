@@ -23,6 +23,16 @@ public class Question {
 	@Column(columnDefinition = "TEXT")
 	private String content;
 
-	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Answer> answers;
+	
+	public Answer addAnswer(String content) {
+		Answer answer = new Answer();
+		answer.setContent(content);
+		answer.setQuestion(this);
+		answer.setCreateDate(LocalDateTime.now());
+		answers.add(answer);
+
+		return answer;
+	}
 }
