@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,5 +52,33 @@ public class QuestRepositoryTest {
 		Question question = questionRepository.findBySubjectAndContent("sbb가 무엇인가요", "sbb에 대해서 알고 싶습니다.").get();
 		// SELECT * FROM question WHERE subject = 'sbb가 무엇인가요?' AND content = 'sbb에 대해서 알고 싶습니다.'
 		assertThat(question.getId()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("findBySubjectLike")
+	void t5() {
+		/*
+		* ssb% : ssb로 시작하는 문자열
+		* %ssb : ssb로 끝나는 문자열
+		* %ssb% : ssb를 포함한 문자열
+		* */
+		List<Question> questions = questionRepository.findBySubjectLike("sbb%");
+
+		Question question = questions.get(0);
+		assertThat(question.getSubject()).isEqualTo("sbb가 무엇인가요");
+	}
+
+	@Test
+	@DisplayName("수정")
+	@Transactional
+	void t6() {
+		Question question = questionRepository.findById(1).get();
+		assertThat(question).isNotNull();
+
+		question.setSubject("수정된 제목");
+		questionRepository.save(question);
+
+		Question foundQuestion = questionRepository.findBySubject("수정된 제목").get();
+		assertThat(foundQuestion).isNotNull();
 	}
 }
