@@ -24,7 +24,7 @@ public class TestInitData {
 	ApplicationRunner testsInitDataApplicationRunner() {
 		return args -> {
 			self.work1();
-		}
+		};
 	}
 
 	@Transactional

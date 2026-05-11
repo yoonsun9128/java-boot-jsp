@@ -2,7 +2,7 @@ spring:
   application:
     name: sub
   profiles:
-    active: dev
+    active: test
   output:
     ansi:
       enabled: always #출력문 컬러변경
