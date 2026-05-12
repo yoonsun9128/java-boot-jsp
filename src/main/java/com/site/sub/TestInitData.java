@@ -1,5 +1,7 @@
 package com.site.sub;
 
+import com.site.sub.question.Question;
+import com.site.sub.question.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;

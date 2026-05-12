@@ -1,5 +1,7 @@
 package com.site.sub;
 
+import com.site.sub.question.Question;
+import com.site.sub.question.QuestionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

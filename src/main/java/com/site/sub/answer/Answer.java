@@ -1,5 +1,6 @@
-package com.site.sub;
+package com.site.sub.answer;
 
+import com.site.sub.question.Question;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
