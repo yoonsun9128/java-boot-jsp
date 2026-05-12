@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 public class QuestRepositoryTest {
 	@Autowired
 	private QuestionRepository questionRepository;
@@ -73,7 +74,6 @@ public class QuestRepositoryTest {
 
 	@Test
 	@DisplayName("수정")
-	@Transactional
 	void t6() {
 		Question question = questionRepository.findById(1).get();
 		assertThat(question).isNotNull();
@@ -98,7 +98,6 @@ public class QuestRepositoryTest {
 
 	@Test
 	@DisplayName("답변 생성")
-	@Transactional
 	void v8() {
 		Question question = questionRepository.findById(2).get();
 
@@ -111,7 +110,6 @@ public class QuestRepositoryTest {
 
 	@Test
 	@DisplayName("onetomany 답변생성")
-	@Transactional
 	void v9() {
 		Question question = questionRepository.findById(2).get();
 

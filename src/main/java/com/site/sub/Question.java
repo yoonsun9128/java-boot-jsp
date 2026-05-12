@@ -23,9 +23,11 @@ public class Question {
 	@Column(columnDefinition = "TEXT")
 	private String content;
 
-	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	// eager 보다는 lazy가 좋다. lazy는 필요할때마다 렌더링 하는 방식으로 eager보다 메모리를 낭비를 줄일 수 있다.
+//	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Answer> answers;
-	
+
 	public Answer addAnswer(String content) {
 		Answer answer = new Answer();
 		answer.setContent(content);
