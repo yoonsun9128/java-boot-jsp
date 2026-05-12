@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>질문 목록</title>
+</head>
+<body>
+<!--<h1>이름 : [[${name}]]</h1>-->
+
+<!--<h1>나이들</h1>-->
+<!--<ul>-->
+<!--    <li th:each="age : ${ages}">-->
+<!--        [[${age}]]-->
+<!--    </li>-->
+<!--</ul>-->
+
+<h1>질문목록</h1>
+<ul>
+    <li th:each="q : ${questionList}">
+        [[${q.id}]] : [[${q.getSubject()}]]
+    </li>
+</ul>
+</body>
+</html>
