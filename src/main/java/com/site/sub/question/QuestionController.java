@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -12,10 +13,11 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/question")
 public class QuestionController {
 	private final QuestioniService questioniService;
 
-	@GetMapping("/question/list")
+	@GetMapping("/list")
 	@ResponseBody
 	public String list() {
 		List<Question> questions = questioniService.getList();
@@ -42,7 +44,7 @@ public class QuestionController {
                 """.formatted(questionLiHtml);
 	}
 
-	@GetMapping("/question/htmllist")
+	@GetMapping("/htmllist")
 	public String htmlList(Model model) {
 		//위 에있는 필드를 사용했다라는 의미 생략이 가능하다.
 		// 컨트롤러 -> 서비스 -> 리포지터리 순서로 접근
@@ -51,7 +53,7 @@ public class QuestionController {
 		return "question_list";
 	}
 
-	@GetMapping(value = "/question/detail/{id}")
+	@GetMapping(value = "/detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		Question question = questioniService.getQuestioin(id);
 		model.addAttribute("question", question);
