@@ -9,14 +9,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor //생성자 주입
-public class QuestioniService {
+public class QuestionService {
 	private final QuestionRepository questionRepository;
 
 	public List<Question> getList() {
 		return questionRepository.findAll();
 	}
 
-	public Question getQuestioin(int id) {
+	public Question getQuestion(int id) {
 		Optional<Question> opQuestion = questionRepository.findById(id);
 
 		if (opQuestion.isPresent()) {
