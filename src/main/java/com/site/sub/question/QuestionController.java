@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 @Controller
 @RequiredArgsConstructor
 public class QuestionController {
-	private final QuestionRepository questionRepository;
+	private final QuestioniService questioniService;
 
 	@GetMapping("/question/list")
 	@ResponseBody
 	public String list() {
-		List<Question> questions = questionRepository.findAll();
+		List<Question> questions = questioniService.getList();
 		String questionLiHtml = questions
 				.stream()
 				.map(q -> "<li>%d / %s</li>".formatted(q.getId(), q.getSubject()))
@@ -44,7 +44,8 @@ public class QuestionController {
 	@GetMapping("/question/htmllist")
 	public String htmlList(Model model) {
 		//위 에있는 필드를 사용했다라는 의미 생략이 가능하다.
-		List<Question> questionList = this.questionRepository.findAll();
+		// 컨트롤러 -> 서비스 -> 리포지터리 순서로 접근
+		List<Question> questionList = this.questioniService.getList();
 		model.addAttribute("questionList" , questionList);
 		return "question_list";
 	}
